@@ -6,12 +6,13 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   /* background-color: #f5ebe0; */
-  color: #7d7872;
+  color: gold;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+    color: gold;
 }
 
 h1 {
@@ -23,6 +24,9 @@ main {
   margin: auto;
   display: flex;
   justify-content: space-between;
+  background-image: url(https://t4.ftcdn.net/jpg/00/52/92/49/360_F_52924966_2iABJVRyOiT4dI4cGzvzdiazsyeEDiv6.jpg);
+  color: gold;
+
 }
 
 main > div {
@@ -31,16 +35,23 @@ main > div {
 
 ul {
   max-width: 100%;
+  color: gold;
 }
 
 p {
   max-width: 80%;
+  color: gold;
 }
 p span {
   font-weight: bold;
+  color: gold;
 }
 
 .dogDetails {
   width: 80%;
 }
 
+button {
+  color: black;
+  background-color: gold;
+}

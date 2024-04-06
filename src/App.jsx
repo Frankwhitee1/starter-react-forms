@@ -7,6 +7,10 @@ import { v1 as generateUniqueID } from "uuid";
 function App() {
   const [dogs, setDogs] = useState(dogsData);
   const [showNewDogForm, setNewDogForm] = useState(false);
+  // to handle checkbox change
+  const [checked, setChecked] = useState(false);
+  // change state for check box
+  const [selectOption, setSelectOption] = useState("");
   const [newDog, setNewDog] = useState({
     id: "",
     name: "",
@@ -33,17 +37,72 @@ function App() {
     setDogs([rover, ...dogs]);
   }
 
-  function handleTextChange(event) {}
+  function resetDogForm() {
+    setNewDog({
+      id: "",
+      name: "",
+      present: false,
+      grade: 100,
+      age: "",
+      likesSwimming: "",
+      favFlavor: "",
+      contact: "",
+    });
+    setChecked(false);
+    setSelectOption("");
+  }
+// handles checkbox Change
+  function handleCheckboxChange() {
+    setChecked(!checked);
+  }
+// handles select Change
+  function handleSelectChange(event) {
+    setSelectOption(event.target.value);
+  }
 
+// to handle submit button 
+function handleSubmit(event) {
+  event.preventDefault();
+  console.log("form submitted");
+  addDog();
+  resetDogForm();
+  toggleNewDogForm();
+  alert("form submitted")
+}
+// handle text change
+  function handleTextChange(event) {
+    setNewDog({
+      ...newDog,
+      [event.target.id]: event.target.value,
+    });
+  }
+
+
+// to add a   
+function addDog() {
+  const createDog = {
+    id: generateUniqueID(),
+    name: newDog.name,
+    present: false,
+    grade: 100,
+    notes: "",
+    age: newDog.age,
+    likesSwimming: checked,
+    favFlavor: selectOption,
+    contact: newDog.contact,
+  };
+  setDogs([createDog, ...dogs]);
+}
+// remove dog
   function removeDog(dogID) {
     const filteredDogArray = dogs.filter((dog) => dog.id !== dogID);
     setDogs(filteredDogArray);
   }
-
+// toggleForm (make it dissapear)
   function toggleNewDogForm() {
     setNewDogForm(!showNewDogForm);
   }
-
+// update Attendace
   function updateDogAttendance(dogId) {
     const dogArray = [...dogs];
     const index = dogArray.findIndex((dog) => dogId === dog.id);
@@ -61,7 +120,7 @@ function App() {
             {showNewDogForm ? "hide form" : "Add a new dog"}
           </button>
           {showNewDogForm ? (
-            <form>
+            <form onSubmit={handleSubmit}>
               <label htmlFor="name">Name:</label>
               <input
                 type="text"
@@ -87,7 +146,7 @@ function App() {
                 value={newDog.contact}
               />
               <label htmlFor="favFlavor">Favorite flavor:</label>
-              <select id="favFlavor">
+              <select id="favFlavor" onChange={handleSelectChange}>
                 <option value=""></option>
                 <option value="beef">Beef</option>
                 <option value="chicken">Chicken</option>
@@ -95,7 +154,7 @@ function App() {
                 <option value="bacon">Bacon</option>
               </select>
               <label>Likes swimming:</label>
-              <input type="checkbox" />
+              <input type="checkbox" checked={checked} onChange={handleCheckboxChange} />
               <br />
               <input type="submit" />
             </form>
